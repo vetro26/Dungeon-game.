@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- ========================================================= -->
+  <!-- SECTION 01 - PAGE TITLE AND STYLESHEET                    -->
+  <!-- ========================================================= -->
+  <title>Dungeon Grid Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- ========================================================= -->
+  <!-- SECTION 02 - MAIN GAME LAYOUT                             -->
+  <!-- This holds the left panel, center game, and right panel.  -->
+  <!-- ========================================================= -->
+  <div class="game-layout">
+
+    <!-- ======================================================= -->
+    <!-- SECTION 03 - LEFT COLUMN                                -->
+    <!-- Character info and dungeon info live here.              -->
+    <!-- ======================================================= -->
+    <div class="left-column">
+
+      <!-- ===================================================== -->
+      <!-- SECTION 04 - CHARACTER PANEL                          -->
+      <!-- Displays health, mana, inventory, spells, buffs, etc. -->
+      <!-- ===================================================== -->
+      <aside class="character-panel">
+        <h2>Character</h2>
+
+        <div class="character-section">
+          <h3>Health</h3>
+          <p><span id="healthText">100</span></p>
+        </div>
+
+        <div class="character-section">
+          <h3>Mana</h3>
+          <p><span id="manaText">100</span></p>
+        </div>
+
+        <div class="character-section">
+          <h3>Items</h3>
+          <div id="itemsList" class="empty-list"></div>
+        </div>
+
+        <div class="character-section">
+  <h3>Spells</h3>
+  <div id="spellsList" class="empty-list"></div>
+
+  <div id="selectedSpellInfo" class="selected-spell-info empty-spell-info">
+    <div class="selected-spell-placeholder">No spell selected.</div>
+  </div>
+</div>
+
+        <div class="character-section">
+          <h3>Buffs</h3>
+          <div id="buffsList" class="empty-list"></div>
+        </div>
+
+        <div class="character-section">
+          <h3>Curses</h3>
+          <div id="cursesList" class="empty-list"></div>
+        </div>
+      </aside>
+
+      <!-- ===================================================== -->
+      <!-- SECTION 05 - INFO PANEL                               -->
+      <!-- Displays floor, position, and map symbol legend.       -->
+      <!-- ===================================================== -->
+      <div class="info-panel">
+        <p><strong>Floor:</strong> <span id="floorText">1</span></p>
+        <p><strong>Position:</strong> <span id="positionText">1,1</span></p>
+
+        <p><strong>Goal:</strong> Find the stairs <span class="inline-stairs">></span></p>
+        <p><strong>Door:</strong> <span class="inline-door">+</span></p>
+        <p><strong>Chest:</strong> <span class="inline-chest">C</span></p>
+      </div>
+    </div>
+
+    <!-- ======================================================= -->
+    <!-- SECTION 06 - CENTER GAME AREA                           -->
+    <!-- The title, instructions, and dungeon grid are here.     -->
+    <!-- ======================================================= -->
+    <div class="game-wrapper">
+      <h1>Dungeon Game</h1>
+      <p class="instructions">Move with WASD or Arrow Keys</p>
+      <div id="game"></div>
+    </div>
+
+    <!-- ======================================================= -->
+    <!-- SECTION 07 - RIGHT PANEL                                -->
+    <!-- Used for chest contents, item results, and more later.  -->
+    <!-- ======================================================= -->
+    <aside id="rightPanel" class="right-panel hidden">
+      <div class="panel-header">
+        <h2 id="panelTitle">Chest</h2>
+        <button id="closePanelBtn">X</button>
+      </div>
+
+      <div id="panelContent" class="panel-content">
+        <p>No chest opened yet.</p>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- SECTION 08 - DEATH SCREEN                                 -->
+  <!-- Full-screen defeat overlay with restart button.           -->
+  <!-- ========================================================= -->
+  <div id="deathScreen" class="death-screen hidden">
+    <div class="death-screen-card">
+      <div class="death-screen-label">Run Ended</div>
+      <h2 id="deathTitle">Defeat</h2>
+      <p id="deathMessage" class="death-screen-message">You have fallen in the dungeon.</p>
+
+      <div class="death-screen-stats">
+        <div class="death-stat-row">
+          <span class="death-stat-label">Floor Reached</span>
+          <span id="deathFloorText" class="death-stat-value">1</span>
+        </div>
+        <div class="death-stat-row">
+          <span class="death-stat-label">Killed By</span>
+          <span id="deathCauseText" class="death-stat-value">Unknown</span>
+        </div>
+      </div>
+
+      <button id="restartGameBtn" class="death-screen-button">Restart Run</button>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- SECTION 09 - SCRIPT LOAD ORDER                            -->
+  <!-- Support systems load first, then the main game script.    -->
+  <!-- ========================================================= -->
+  <script src="spell-effects.js"></script>
+  <script src="spells.js"></script>
+  <script src="items.js"></script>
+  <script src="enemies.js"></script>
+  <script src="buffs.js"></script>
+  <script src="script.js"></script>
+  
+</body>
+</html>

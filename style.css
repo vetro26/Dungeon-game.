@@ -1,0 +1,824 @@
+/* ============================================================ */
+/* SECTION 01 - PAGE BASE STYLES                                */
+/* General page look and layout foundation.                     */
+/* ============================================================ */
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#111;
+  color:white;
+  padding:20px;
+}
+
+/* ============================================================ */
+/* SECTION 02 - MAIN LAYOUT                                     */
+/* Controls the three main columns of the game screen.          */
+/* ============================================================ */
+.game-layout{
+  display:flex;
+  gap:20px;
+  align-items:flex-start;
+  justify-content:center;
+}
+
+/* ============================================================ */
+/* SECTION 03 - LEFT COLUMN                                     */
+/* Holds the character panel and the info panel.                */
+/* ============================================================ */
+.left-column{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+/* ============================================================ */
+/* SECTION 04 - CHARACTER PANEL                                 */
+/* The player stats and lists panel.                            */
+/* ============================================================ */
+.character-panel{
+  width:170px;
+  background:#1a1a1a;
+  border:1px solid #555;
+  padding:10px;
+  box-sizing:border-box;
+}
+
+.character-panel h2{
+  margin:0 0 8px 0;
+  font-size:18px;
+}
+
+.character-section{
+  margin-bottom:10px;
+}
+
+.character-section h3{
+  margin:0 0 4px 0;
+  font-size:14px;
+  color:#cccccc;
+}
+
+.empty-list{
+  min-height:14px;
+}
+
+.inventory-list{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.inventory-item-button{
+  width:100%;
+  background:#2f2f2f;
+  color:white;
+  border:1px solid #666;
+  padding:6px;
+  text-align:left;
+  cursor:pointer;
+}
+
+.inventory-item-button:hover{
+  background:#424242;
+}
+
+.active-spell-button{
+  background:#5a2030;
+  border-color:#c45a6a;
+}
+
+/* ============================================================ */
+/* SECTION 04.5 - SELECTED SPELL INFO PANEL                     */
+/* Shows the currently selected spell's details.                */
+/* ============================================================ */
+.selected-spell-info{
+  margin-top:8px;
+  padding:8px;
+  border:1px solid #555;
+  background:#202020;
+  min-height:72px;
+  box-sizing:border-box;
+}
+
+.empty-spell-info{
+  display:flex;
+  align-items:center;
+}
+
+.selected-spell-placeholder{
+  color:#9a9a9a;
+  font-size:12px;
+}
+
+.selected-spell-title{
+  font-weight:bold;
+  color:#ffd27a;
+  margin-bottom:6px;
+}
+
+.selected-spell-stats{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  margin-bottom:6px;
+}
+
+.selected-spell-stat{
+  font-size:12px;
+  color:#d8d8d8;
+}
+
+.selected-spell-description{
+  font-size:12px;
+  color:#bfbfbf;
+  line-height:1.35;
+}
+
+/* ============================================================ */
+/* SECTION 05 - INFO PANEL                                      */
+/* Floor number, position, and tile legend.                     */
+/* ============================================================ */
+.info-panel{
+  background:#1a1a1a;
+  border:1px solid #555;
+  padding:10px;
+  width:170px;
+  font-size:14px;
+  margin:0;
+}
+
+/* ============================================================ */
+/* SECTION 06 - CENTER GAME AREA                                */
+/* Title, instructions, and the tile grid wrapper.              */
+/* ============================================================ */
+.game-wrapper{
+  text-align:center;
+}
+
+.instructions{
+  color:#ccc;
+  margin-bottom:10px;
+}
+
+#game{
+  display:grid;
+  grid-template-columns:repeat(40,16px);
+  grid-template-rows:repeat(40,16px);
+  gap:1px;
+  background:#222;
+  padding:6px;
+  border:2px solid #666;
+  margin:0 auto;
+}
+
+/* ============================================================ */
+/* SECTION 07 - BASE TILE STYLES                                */
+/* Shared tile sizing and layout behavior.                      */
+/* ============================================================ */
+.tile{
+  width:16px;
+  height:16px;
+  border:1px solid #1a1a1a;
+  position:relative;
+  background:black;
+}
+
+/* ============================================================ */
+/* SECTION 08 - TILE TYPES                                      */
+/* Visuals for floors, walls, stairs, doors, and chests.        */
+/* ============================================================ */
+.floor{
+  background:#3a3a3a;
+}
+
+.wall{
+  background:#1d1d1d;
+}
+
+.door{
+  background:#6b4f2a;
+}
+
+.door::after{
+  content:"+";
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#f5d28b;
+  font-size:11px;
+}
+
+.open-door{
+  background:#8a6a3b;
+}
+
+.open-door::after{
+  content:"/";
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff1c1;
+}
+
+.stairs{
+  background:#4a4a4a;
+}
+
+.stairs::after{
+  content:">";
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#7cff7c;
+}
+
+.chest{
+  background:#5a4a00;
+}
+
+.chest::after{
+  content:"C";
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#ffd84d;
+  font-weight:bold;
+}
+
+.open-chest{
+  background:#7a6300;
+}
+
+/* ============================================================ */
+/* SECTION 09 - ENEMY AND PLAYER VISUALS                        */
+/* Symbols displayed on top of tiles.                           */
+/* ============================================================ */
+.enemy::after{
+  content:attr(data-enemy-symbol);
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  z-index:2;
+}
+
+.enemy-test-dummy::after{
+  color:red;
+}
+
+.enemy-goblin::after{
+  color:#7CFC00;
+}
+
+.player::before{
+  content:"@";
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:gold;
+  font-weight:bold;
+  z-index:3;
+}
+
+/* ============================================================ */
+/* SECTION 10 - SPELL TARGET HIGHLIGHTS                         */
+/* Highlights valid spell targets on the grid.                  */
+/* ============================================================ */
+.spell-target-highlight{
+  box-shadow:inset 0 0 0 1px rgba(255,120,120,.7);
+}
+
+.spell-target-mana-bolt{
+  background:rgba(180,20,20,.85) !important;
+}
+
+.spell-target-mana-bolt::after{
+  color:#ffd2d2;
+  text-shadow:0 0 4px rgba(255,120,120,.9);
+}
+
+.spell-target-fireball{
+  background:rgba(255,110,40,.82) !important;
+}
+
+.spell-target-fireball::after{
+  color:#fff1d0;
+  text-shadow:0 0 6px rgba(255,180,100,.95);
+}
+
+.spell-target-frost-lance{
+  background:rgba(100,190,255,.82) !important;
+}
+
+.spell-target-frost-lance::after{
+  color:#e6f7ff;
+  text-shadow:0 0 6px rgba(160,220,255,.95);
+}
+
+.spell-target-chain-lightning{
+  background:rgba(180,120,255,.82) !important;
+}
+
+.spell-target-chain-lightning::after{
+  color:#f4e8ff;
+  text-shadow:0 0 7px rgba(210,170,255,.98);
+}
+
+.spell-target-poison-cloud{
+  background:rgba(90,180,80,.82) !important;
+}
+
+.spell-target-poison-cloud::after{
+  color:#ecffe8;
+  text-shadow:0 0 6px rgba(150,255,140,.95);
+}
+
+.spell-range-preview{
+  box-shadow:inset 0 0 0 1px rgba(110,170,255,.45);
+}
+
+.spell-radius-preview{
+  box-shadow:
+    inset 0 0 0 1px rgba(255,215,90,.95),
+    0 0 6px rgba(255,190,70,.35);
+}
+
+.spell-radius-center{
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,.95),
+    inset 0 0 0 4px rgba(255,150,60,.95),
+    0 0 8px rgba(255,170,80,.55);
+}
+
+/* ============================================================ */
+/* SECTION 10.5 - SPELL EFFECT OVERLAY                          */
+/* Floating screen-space spell effects that sit above the grid. */
+/* ============================================================ */
+.spell-effect-layer{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:900;
+}
+
+.spell-effect{
+  position:absolute;
+  transform:translate(-50%, -50%);
+  border-radius:50%;
+  pointer-events:none;
+}
+
+.spell-effect-core,
+.spell-effect-ring{
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+}
+
+.spell-effect-mana-bolt-hit{
+  animation:spell-effect-fade-out .32s ease-out forwards;
+}
+
+.spell-effect-mana-bolt-hit .spell-effect-core{
+  background:radial-gradient(circle, rgba(255,255,255,.95) 0%, rgba(255,120,150,.9) 28%, rgba(180,40,80,.45) 60%, rgba(180,40,80,0) 100%);
+  box-shadow:0 0 14px rgba(255,120,150,.9);
+  animation:spell-effect-pop .22s ease-out forwards;
+}
+
+.spell-effect-mana-bolt-hit .spell-effect-ring{
+  border:2px solid rgba(255,180,210,.92);
+  box-shadow:0 0 10px rgba(255,130,180,.65);
+  animation:spell-effect-ring-expand .3s ease-out forwards;
+}
+
+.spell-effect-fireball-center{
+  animation:spell-effect-fade-out .52s ease-out forwards;
+}
+
+.spell-effect-fireball-center .spell-effect-core{
+  background:radial-gradient(circle, rgba(255,255,220,1) 0%, rgba(255,210,100,.95) 18%, rgba(255,120,20,.88) 42%, rgba(200,40,0,.55) 72%, rgba(200,40,0,0) 100%);
+  box-shadow:0 0 18px rgba(255,140,40,.95);
+  animation:spell-effect-fireball-core .45s ease-out forwards;
+}
+
+.spell-effect-fireball-center .spell-effect-ring{
+  border:3px solid rgba(255,180,110,.95);
+  box-shadow:0 0 16px rgba(255,120,0,.75);
+  animation:spell-effect-fireball-ring .45s ease-out forwards;
+}
+
+.spell-effect-fireball-center .spell-effect-ring-delayed{
+  animation-delay:.08s;
+}
+
+.spell-effect-fireball-splash{
+  animation:spell-effect-fade-out .4s ease-out forwards;
+}
+
+.spell-effect-fireball-splash .spell-effect-core{
+  background:radial-gradient(circle, rgba(255,240,170,.95) 0%, rgba(255,150,60,.92) 35%, rgba(255,90,20,.4) 70%, rgba(255,90,20,0) 100%);
+  box-shadow:0 0 12px rgba(255,140,30,.8);
+  animation:spell-effect-pop .24s ease-out forwards;
+}
+
+.spell-effect-fireball-splash .spell-effect-ring{
+  border:2px solid rgba(255,200,130,.82);
+  animation:spell-effect-ring-expand .36s ease-out forwards;
+}
+
+.spell-effect-frost-lance-hit{
+  animation:spell-effect-fade-out .34s ease-out forwards;
+}
+
+.spell-effect-frost-lance-hit .spell-effect-core{
+  background:radial-gradient(circle, rgba(255,255,255,.98) 0%, rgba(180,240,255,.95) 24%, rgba(90,180,255,.75) 55%, rgba(90,180,255,0) 100%);
+  box-shadow:0 0 14px rgba(140,220,255,.95);
+  animation:spell-effect-pop .22s ease-out forwards;
+}
+
+.spell-effect-frost-lance-hit .spell-effect-ring{
+  border:2px solid rgba(210,245,255,.95);
+  box-shadow:0 0 12px rgba(120,210,255,.7);
+  animation:spell-effect-ring-expand .32s ease-out forwards;
+}
+
+.spell-effect-chain-lightning-arc{
+  animation:spell-effect-fade-out .38s ease-out forwards;
+}
+
+.spell-effect-chain-lightning-arc .spell-effect-core{
+  background:radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(235,220,255,.95) 22%, rgba(170,110,255,.82) 52%, rgba(170,110,255,0) 100%);
+  box-shadow:0 0 16px rgba(195,145,255,.95);
+  animation:spell-effect-pop .2s ease-out forwards;
+}
+
+.spell-effect-chain-lightning-arc .spell-effect-ring{
+  border:2px solid rgba(230,210,255,.95);
+  box-shadow:0 0 14px rgba(185,130,255,.8);
+  animation:spell-effect-ring-expand .28s ease-out forwards;
+}
+
+.spell-effect-poison-cloud-center{
+  animation:spell-effect-fade-out .56s ease-out forwards;
+}
+
+.spell-effect-poison-cloud-center .spell-effect-core{
+  background:radial-gradient(circle, rgba(235,255,220,.92) 0%, rgba(170,255,130,.88) 22%, rgba(90,190,70,.72) 50%, rgba(45,120,35,.42) 75%, rgba(45,120,35,0) 100%);
+  box-shadow:0 0 18px rgba(120,220,100,.8);
+  animation:spell-effect-fireball-core .45s ease-out forwards;
+}
+
+.spell-effect-poison-cloud-center .spell-effect-ring{
+  border:3px solid rgba(180,255,150,.78);
+  box-shadow:0 0 14px rgba(110,220,90,.65);
+  animation:spell-effect-fireball-ring .45s ease-out forwards;
+}
+
+.spell-effect-poison-cloud-center .spell-effect-ring-delayed{
+  animation-delay:.1s;
+}
+
+.spell-effect-poison-cloud-splash{
+  animation:spell-effect-fade-out .42s ease-out forwards;
+}
+
+.spell-effect-poison-cloud-splash .spell-effect-core{
+  background:radial-gradient(circle, rgba(235,255,220,.9) 0%, rgba(150,240,120,.82) 35%, rgba(80,170,65,.4) 70%, rgba(80,170,65,0) 100%);
+  box-shadow:0 0 12px rgba(120,210,90,.7);
+  animation:spell-effect-pop .24s ease-out forwards;
+}
+
+.spell-effect-poison-cloud-splash .spell-effect-ring{
+  border:2px solid rgba(190,255,170,.74);
+  animation:spell-effect-ring-expand .36s ease-out forwards;
+}
+
+@keyframes spell-effect-pop{
+  0%{
+    transform:scale(.25);
+    opacity:0;
+  }
+  35%{
+    opacity:1;
+  }
+  100%{
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+@keyframes spell-effect-ring-expand{
+  0%{
+    transform:scale(.35);
+    opacity:0;
+  }
+  25%{
+    opacity:1;
+  }
+  100%{
+    transform:scale(1.45);
+    opacity:0;
+  }
+}
+
+@keyframes spell-effect-fireball-core{
+  0%{
+    transform:scale(.2);
+    opacity:0;
+  }
+  20%{
+    opacity:1;
+  }
+  65%{
+    transform:scale(1);
+    opacity:1;
+  }
+  100%{
+    transform:scale(1.18);
+    opacity:.2;
+  }
+}
+
+@keyframes spell-effect-fireball-ring{
+  0%{
+    transform:scale(.2);
+    opacity:0;
+  }
+  22%{
+    opacity:1;
+  }
+  100%{
+    transform:scale(1.35);
+    opacity:0;
+  }
+}
+
+@keyframes spell-effect-fade-out{
+  0%{
+    opacity:1;
+  }
+  100%{
+    opacity:0;
+  }
+}
+
+/* ============================================================ */
+/* SECTION 11 - FOG OF WAR                                      */
+/* Unseen tiles are blacked out. Explored tiles are dimmed.     */
+/* ============================================================ */
+.unseen{
+  background:#050505 !important;
+  border-color:#050505 !important;
+}
+
+.explored{
+  filter:brightness(.55);
+}
+
+.visible{
+  filter:brightness(1);
+}
+
+/* ============================================================ */
+/* SECTION 12 - RIGHT PANEL                                     */
+/* Used for chest loot and action/result messages.              */
+/* ============================================================ */
+.right-panel{
+  width:260px;
+  background:#1a1a1a;
+  border:1px solid #555;
+  padding:12px;
+}
+
+.hidden{
+  display:none;
+}
+
+.panel-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+}
+
+.panel-header button{
+  background:#333;
+  color:white;
+  border:1px solid #666;
+  cursor:pointer;
+}
+
+.panel-content{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+/* ============================================================ */
+/* SECTION 13 - LOOT PANEL CONTENT                              */
+/* Styles for chest loot entries and take buttons.              */
+/* ============================================================ */
+.loot-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.loot-item{
+  border:1px solid #555;
+  background:#242424;
+  padding:10px;
+}
+
+.loot-item-name{
+  font-weight:bold;
+  margin-bottom:4px;
+}
+
+.loot-item-description{
+  font-size:13px;
+  color:#d0d0d0;
+  margin-bottom:8px;
+}
+
+.loot-button{
+  background:#4b3d00;
+  color:#ffd84d;
+  border:1px solid #8a7800;
+  padding:6px 10px;
+  cursor:pointer;
+}
+
+.loot-button:hover{
+  background:#665200;
+}
+
+/* ============================================================ */
+/* SECTION 14 - INLINE LEGEND COLORS                            */
+/* Colors used in the info panel legend.                        */
+/* ============================================================ */
+.inline-stairs{
+  color:#7cff7c;
+}
+
+.inline-door{
+  color:#f5d28b;
+}
+
+.inline-chest{
+  color:#ffd84d;
+}
+
+/* ============================================================ */
+/* SECTION 15 - ENEMY HOVER TOOLTIP                             */
+/* Floating tooltip that shows enemy health on hover.           */
+/* ============================================================ */
+.enemy-hover-tooltip{
+  position:absolute;
+  z-index:1000;
+  min-width:140px;
+  max-width:220px;
+  background:#161616;
+  border:1px solid #777;
+  box-shadow:0 4px 12px rgba(0,0,0,.45);
+  padding:8px 10px;
+  pointer-events:none;
+  color:#ffffff;
+  font-size:13px;
+}
+
+.enemy-hover-name{
+  font-weight:bold;
+  margin-bottom:4px;
+  color:#ffb0b0;
+}
+
+.enemy-hover-health-text{
+  margin-bottom:6px;
+  color:#dddddd;
+}
+
+.enemy-hover-health-bar{
+  width:100%;
+  height:10px;
+  background:#2b2b2b;
+  border:1px solid #555;
+  overflow:hidden;
+}
+
+.enemy-hover-health-fill{
+  height:100%;
+  background:#c93a3a;
+}
+/* ============================================================ */
+/* SECTION 23 - DEATH SCREEN                                    */
+/* Full-screen defeat overlay and restart button styling.       */
+/* ============================================================ */
+.death-screen{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.86);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:2000;
+  padding:20px;
+  box-sizing:border-box;
+}
+
+.death-screen.hidden{
+  display:none;
+}
+
+.death-screen-card{
+  width:min(460px, 100%);
+  background:linear-gradient(180deg, #1b0f12 0%, #12090b 100%);
+  border:1px solid #7a2f39;
+  box-shadow:0 0 30px rgba(0,0,0,0.55);
+  padding:28px 24px;
+  box-sizing:border-box;
+  text-align:center;
+}
+
+.death-screen-label{
+  display:inline-block;
+  margin-bottom:10px;
+  padding:5px 10px;
+  border:1px solid #8e3a45;
+  color:#f2b8bf;
+  background:rgba(130, 35, 45, 0.18);
+  font-size:12px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+
+.death-screen-card h2{
+  margin:0 0 12px 0;
+  font-size:36px;
+  color:#ff8d98;
+}
+
+.death-screen-message{
+  margin:0 0 20px 0;
+  color:#f0d7da;
+  font-size:16px;
+}
+
+.death-screen-stats{
+  margin:0 auto 22px auto;
+  width:100%;
+  max-width:320px;
+  border:1px solid #4a252a;
+  background:rgba(255,255,255,0.03);
+}
+
+.death-stat-row{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:10px 12px;
+  border-bottom:1px solid #4a252a;
+}
+
+.death-stat-row:last-child{
+  border-bottom:none;
+}
+
+.death-stat-label{
+  color:#d7b8bc;
+}
+
+.death-stat-value{
+  color:#ffffff;
+  font-weight:bold;
+}
+
+.death-screen-button{
+  min-width:180px;
+  background:#a33a47;
+  color:white;
+  border:1px solid #d56472;
+  padding:12px 18px;
+  font-size:15px;
+  cursor:pointer;
+}
+
+.death-screen-button:hover{
+  background:#be4755;
+}
+
+.death-screen-button:active{
+  transform:translateY(1px);
+}
